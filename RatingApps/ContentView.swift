@@ -9,13 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List {
+                NavigationLink("Detail View"){
+                   Text("Hello from Detail View")
+                        .onAppear {
+                           let count = UserDefaults.standard.integer(forKey: "ScreenCount")
+                            UserDefaults.standard.set(count + 1, forKey: "ScreenCount")
+                        }
+                }
+            }
+            .navigationTitle("App Rating")
+            .presentAppRating {
+                let count = UserDefaults.standard.integer(forKey: "ScreenCount")
+                return count >= 2
+            } askLaterCondition: {
+                let count = UserDefaults.standard.integer(forKey: "ScreenCount")
+                return count >= 4
+            }
         }
-        .padding()
     }
 }
 
